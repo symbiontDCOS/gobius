@@ -10,7 +10,7 @@ Output=installer_2107rc1.img.xz
 XZ=yes
 
 [Packages]
-Cache=/home/rcallicotte/Images/__sharedCache__
+Cache=../__sharedCache__
 Packages=
 	btrfs-progs
 	dialog
