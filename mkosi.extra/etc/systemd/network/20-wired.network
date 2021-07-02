@@ -1,0 +1,8 @@
+# 20-wired.network
+# Configuration for simple networking configuration
+
+[Match]
+Name=en*
+
+[Network]
+DHCP=yes
