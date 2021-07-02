@@ -1,0 +1,42 @@
+---
+
+default:
+  distribution:
+    distribution: fedora
+    release: 32
+
+  output:
+    bootable: True
+    format: gpt_ext4
+    hostname: installer  
+    output: installer_2107rc1
+    xz: True
+
+
+  packages:
+    cache: '../__sharedCache__'
+    packages: 
+      - bmap-tools
+      - btrfs-progs
+      - dialog
+      - dmidecode
+      - dnf
+      - dnf-utils
+      - htop
+      - openssh-server
+      - passwd
+      - procps-ng
+      - python3-dialog
+      - python3-pytz
+      - python3-requests
+      - usbutils
+      - vim-enhanced
+      - zstd
+
+  partitions:
+    rootsize: 2G    
+
+  validation:
+    bmap: True
+    checksum: True
+    autologin: True    
