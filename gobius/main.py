@@ -53,7 +53,7 @@ def main():
     if display_license() == 'cancel':
         sys.exit(1)
 
-    myurl = display_urlselector(DEFAULT_URL)[1] if
+    myurl = display_urlselector(DEFAULT_URL)[1]
     image = select_image(myurl)[1]
     timezone = select_timezone()[1]
     hostname = display_hostname()[1]
