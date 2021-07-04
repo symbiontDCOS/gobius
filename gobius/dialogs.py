@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+# -*- coding:utf-8 -*-
 
 """
 Copyright (c) 2021 symbiontDCOS
@@ -26,60 +26,17 @@ SOFTWARE.
 """
 
 
-
-import json
-import shlex
-import subprocess
 import sys
 import time
 import pytz
-import datetime
-import requests
+from gobius.utils import list_disks, list_images
 from dialog import Dialog
 
 
-VERSION = '2107rc1'
 DISPLAY = Dialog(dialog='dialog', DIALOGRC='/etc/dialogrc')
-DEFAULT_TITLE = f'Symbiont SlimOS installer v{VERSION}'
-DEFAULT_URL = 'http://osi-hub.callicotte.org/osi-hub/SlimOS/generic-x86_64/stable'
 
 
-def list_disks():
-    '''Gather disk names'''
-    mydisks = subprocess.run(shlex.split('/usr/bin/lsblk -J'), capture_output=True, check=True)
-    mydisks = mydisks.stdout
-    mydisks = json.loads(mydisks.decode('utf-8'))
-
-    myblockdevices = []
-
-    for drive in mydisks['blockdevices']:
-        myblockdevices.append(drive['name'])
-
-    # Remove listings for cdrom/dvdrom devices
-    if 'sr0' in myblockdevices:
-        myblockdevices.remove('sr0')
-
-    return myblockdevices
-
-
-def list_images(url):
-    '''Pull the list of images from the server'''
-    try:
-        images = []
-        resp = requests.get(url)
-
-        for item in resp.json():
-            if item['name'].endswith('.img.xz'):
-                images.append(f'{item["name"]}')
-
-        return images
-
-    except (requests.ConnectionError, json.JSONDecodeError):
-        display_alert(
-                f'\Zb\Z1Unable to find image directory. Please check the URL ({url}) and try again. Installation aborted!!\Zn')
-
-
-def write_image(url, dest):
+def display_write_image(url, dest):
     '''
     Write the selected image to disk using bmaptools. This requires a specialized webserver
     (osi-hub).  The webserver must display the artifacts in json format.
@@ -90,8 +47,7 @@ def write_image(url, dest):
                         height=15,
                         percent=0)
 
-    mycopy = subprocess.Popen(
-        shlex.split(f'/usr/bin/bmaptool --quiet copy --no-sig-verify {url} {dest}'))
+    mycopy = write_image(url, dest)
 
     percent = 5
     while mycopy.poll() is None:
@@ -191,7 +147,6 @@ def display_urlselector(default_text):
         width=100,
         height=10,
         init=default_text)
-
 
 
 def display_hostname():
@@ -299,36 +254,3 @@ def display_complete():
     '''Installation finished'''
     DISPLAY.msgbox(
         'Installation has successfully completed.  System will now reboot')
-
-
-
-def main():
-    '''The main function'''
-
-    display_title(DEFAULT_TITLE)
-
-    if display_license() == DISPLAY.DIALOG_CANCEL:
-        sys.exit(1)
-
-    myurl = display_urlselector(DEFAULT_URL)[1]
-    image = select_image(myurl)[1]
-    timezone = select_timezone()[1]
-    hostname = display_hostname()[1]
-    password = display_password()[1]
-    disk = select_disk()[1]
-
-
-    if display_final_answer(
-            img=image,
-            tz=timezone,
-            host=hostname,
-            hd=disk,
-            passwd=password) == DISPLAY.DIALOG_CANCEL:
-        sys.exit(1)
-
-    write_image(f'{myurl}/{image}', disk)
-    display_complete()
-
-
-if __name__ == '__main__':
-    main()
