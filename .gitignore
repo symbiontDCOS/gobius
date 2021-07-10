@@ -1,3 +1,4 @@
+dist/*
 **.pants.d/
 **.pids/
 *.swp
