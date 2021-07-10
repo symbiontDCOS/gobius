@@ -26,7 +26,7 @@ SOFTWARE.
 """
 
 import sys
-from .dialogs import (
+from gobius.dialogs import (
     display_complete,
     display_final_answer,
     display_hostname,
