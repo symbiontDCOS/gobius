@@ -1,6 +1,0 @@
-pythondialog<=3.5.1
-jsonschema<=3.2.0
-requests<=2.22.0
-python-dateutil<=2.8.0
-pytz<=2020.1
-pytzdata<=2019.3

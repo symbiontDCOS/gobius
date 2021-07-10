@@ -1,4 +1,3 @@
+**.pants.d/
+**.pids/
 *.swp
-/.mkosi-*
-/SHA256SUMS
-/SHA256SUMS.gpg
