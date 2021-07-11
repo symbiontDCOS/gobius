@@ -73,7 +73,7 @@ def list_images(url):
         resp = requests.get(url)
 
         for item in resp.json():
-            if item["name"].endswith(".img.xz"):
+            if item["name"].endswith(".img") or item["name"].endswith(".img.xz"):
                 images.append(f'{item["name"]}')
 
         return images

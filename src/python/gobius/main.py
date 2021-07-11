@@ -46,59 +46,27 @@ DEFAULT_TITLE = f"Symbiont SlimOS installer v{VERSION}"
 DEFAULT_URL = "http://osi-hub.callicotte.org/osi-hub/SlimOS/generic-x86_64/stable"
 
 
-def select_myurl():
-    '''run the urlselector'''
-    myurl = display_urlselector(DEFAULT_URL)
-
-    if myurl[0] == 'cancel':
-        die('Installer terminated per user request')
-
-    get_image = display_image(myurl[1])
-
-    if get_image[0] == 'cancel':
-        die('Installer terminated per user request')
-
-    return get_image[1]
-
-
-def select_config(func):
+def select_config(selector):
     """Calls simple selectors"""
-    if func[0] == 'cancel':
+    if selector[0] == 'cancel':
         die('Installer terminated per user request')
 
-    return func[1]
+    return selector[1]
 
 
-def select_timezone():
-    '''Run the timezone selector'''
-    tz = display_timezone()
-    if tz[0] == 'cancel':
-        die('Instaler terminated per user request')
-
-    return tz[1]
-
-
-def select_hostname():
-    '''Run the hostname selector'''
-    hname = display_hostname()
-
-    if hname[0] == 'cancel':
-        die('Instaler terminated per user request')
-
-    return hname[1]
-
-
-def main():
-    """The main function"""
-
-    myurl = []
-
+def install():
+    """Set up the main selector components"""
     display_title(DEFAULT_TITLE)
 
     if display_license() == "cancel":
         die('Installer terminated per user request')
 
-    image = select_myurl()
+    myurl = display_urlselector(DEFAULT_URL)
+
+    if myurl[0] == "cancel":
+        die('Installer terminated per user request')
+
+    image = select_config(display_image(myurl[1]))
     timezone = select_config(display_timezone())
     hostname = select_config(display_hostname())
     password = select_config(display_password())
@@ -112,8 +80,24 @@ def main():
     ):
         die('Installer terminated per user request')
 
-    display_write_image(f"{myurl}/{image}", disk)
-    display_complete()
+    display_write_image(f"{myurl[1]}/{image}", disk)
+
+    return {
+                "timezone": timezone,
+                "hostname": hostname,
+                "password": password,
+                }
+
+
+def post_install(args):
+    """Post install steps"""
+    pass
+
+
+def main():
+    """The main function"""
+    install()
+
 
 
 if __name__ == "__main__":

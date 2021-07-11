@@ -29,7 +29,8 @@ SOFTWARE.
 import sys
 import time
 import pytz
-from gobius.utils import list_disks, list_images
+import random
+from gobius.utils import list_disks, list_images, write_image
 from dialog import Dialog
 
 
@@ -46,11 +47,14 @@ def display_write_image(url, dest):
 
     mycopy = write_image(url, dest)
 
-    percent = 5
+    percent = 0
     while mycopy.poll() is None:
         DISPLAY.gauge_update(percent)
-        time.sleep(5)
+        time.sleep(1)
         percent += 2
+
+        if percent == 100:
+            percent -= random.randint(0, 100)
 
     DISPLAY.gauge_update(100)
     DISPLAY.gauge_stop()
