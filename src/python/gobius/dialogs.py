@@ -170,7 +170,7 @@ def display_clock():
     """Displays the dialog for setting local time"""
 
 
-def select_timezone():
+def display_timezone():
     """Displays the dialog for all"""
     tzlist = pytz.common_timezones
     tzlist.sort()
@@ -186,7 +186,7 @@ def select_timezone():
     )
 
 
-def select_disk():
+def display_disk():
     """Select disk from list"""
     mydisks = list_disks()
     mydisks.sort()
@@ -204,7 +204,7 @@ def select_disk():
     )
 
 
-def select_image(url):
+def display_image(url):
     """Select disk from list"""
 
     myimages = list_images(url)

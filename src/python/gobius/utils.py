@@ -29,6 +29,7 @@ SOFTWARE.
 import subprocess
 import shlex
 import json
+import sys
 import requests
 
 
@@ -40,6 +41,11 @@ def run(cmd, **kwargs):
 def spawn(cmd, **kwargs):
     """Non-blocking generic shell out wrapper"""
     return subprocess.Popen(cmd, **kwargs)
+
+
+def die(msg):
+    """Handles exiting the program.  Always returns status 1"""
+    return sys.exit(msg)
 
 
 def list_disks():
@@ -73,7 +79,7 @@ def list_images(url):
         return images
 
     except (requests.ConnectionError, json.JSONDecodeError):
-        print(
+        sys.exit(
             f"Unable to find image directory. Please check the URL ({url}) and try again. Installation aborted!!"
         )
 

@@ -25,7 +25,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-import sys
 from gobius.dialogs import (
     display_complete,
     display_final_answer,
@@ -35,30 +34,75 @@ from gobius.dialogs import (
     display_urlselector,
     display_title,
     display_write_image,
-    select_disk,
-    select_image,
-    select_timezone,
+    display_disk,
+    display_image,
+    display_timezone,
 )
+from gobius.utils import die
+
 
 VERSION = "2107rc1"
 DEFAULT_TITLE = f"Symbiont SlimOS installer v{VERSION}"
 DEFAULT_URL = "http://osi-hub.callicotte.org/osi-hub/SlimOS/generic-x86_64/stable"
 
 
+def select_myurl():
+    '''run the urlselector'''
+    myurl = display_urlselector(DEFAULT_URL)
+
+    if myurl[0] == 'cancel':
+        die('Installer terminated per user request')
+
+    get_image = display_image(myurl[1])
+
+    if get_image[0] == 'cancel':
+        die('Installer terminated per user request')
+
+    return get_image[1]
+
+
+def select_config(func):
+    """Calls simple selectors"""
+    if func[0] == 'cancel':
+        die('Installer terminated per user request')
+
+    return func[1]
+
+
+def select_timezone():
+    '''Run the timezone selector'''
+    tz = display_timezone()
+    if tz[0] == 'cancel':
+        die('Instaler terminated per user request')
+
+    return tz[1]
+
+
+def select_hostname():
+    '''Run the hostname selector'''
+    hname = display_hostname()
+
+    if hname[0] == 'cancel':
+        die('Instaler terminated per user request')
+
+    return hname[1]
+
+
 def main():
     """The main function"""
+
+    myurl = []
 
     display_title(DEFAULT_TITLE)
 
     if display_license() == "cancel":
-        sys.exit(1)
+        die('Installer terminated per user request')
 
-    myurl = display_urlselector(DEFAULT_URL)[1]
-    image = select_image(myurl)[1]
-    timezone = select_timezone()[1]
-    hostname = display_hostname()[1]
-    password = display_password()[1]
-    disk = select_disk()[1]
+    image = select_myurl()
+    timezone = select_config(display_timezone())
+    hostname = select_config(display_hostname())
+    password = select_config(display_password())
+    disk = select_config(display_disk())
 
     if (
         display_final_answer(
@@ -66,7 +110,7 @@ def main():
         )
         == "cancel"
     ):
-        sys.exit(1)
+        die('Installer terminated per user request')
 
     display_write_image(f"{myurl}/{image}", disk)
     display_complete()
