@@ -48,8 +48,8 @@ DEFAULT_URL = "http://osi-hub.callicotte.org/osi-hub/SlimOS/generic-x86_64/stabl
 
 def select_config(selector):
     """Calls simple selectors"""
-    if selector[0] == 'cancel':
-        die('Installer terminated per user request')
+    if selector[0] == "cancel":
+        die("Installer terminated per user request")
 
     return selector[1]
 
@@ -59,12 +59,12 @@ def install():
     display_title(DEFAULT_TITLE)
 
     if display_license() == "cancel":
-        die('Installer terminated per user request')
+        die("Installer terminated per user request")
 
     myurl = display_urlselector(DEFAULT_URL)
 
     if myurl[0] == "cancel":
-        die('Installer terminated per user request')
+        die("Installer terminated per user request")
 
     image = select_config(display_image(myurl[1]))
     timezone = select_config(display_timezone())
@@ -78,15 +78,15 @@ def install():
         )
         == "cancel"
     ):
-        die('Installer terminated per user request')
+        die("Installer terminated per user request")
 
     display_write_image(f"{myurl[1]}/{image}", disk)
 
     return {
-                "timezone": timezone,
-                "hostname": hostname,
-                "password": password,
-                }
+        "timezone": timezone,
+        "hostname": hostname,
+        "password": password,
+    }
 
 
 def post_install(args):
@@ -97,7 +97,6 @@ def post_install(args):
 def main():
     """The main function"""
     install()
-
 
 
 if __name__ == "__main__":
