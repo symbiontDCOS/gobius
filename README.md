@@ -8,7 +8,9 @@ We use the pants build system to make pex binary packages.  In fact, the pants e
 ./pants package src/python/gobius:main
 ```
 
-
+## Developing Goby  
+Goby wraps bmaptool in a simple to use dialog application.  The main tools we use for this purpose are `flake8`, `mypy`, and `black`.  Color themes for goby 
+are managed in [netinstaller-oci](https://github.com/symbiontDCOS/netinstaller-osi).
 
 
 
