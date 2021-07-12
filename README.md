@@ -1,3 +1,6 @@
+[![Flake8 Linter](https://github.com/symbiontDCOS/gobius/actions/workflows/actions.yml/badge.svg)](https://github.com/symbiontDCOS/gobius/actions/workflows/actions.yml)
+
+
 # Goby Installer  
 Goby is a dialog based ncurses application that installs Symbiont SlimOS.  It is the core component of the [netinstaller-oci](https://github.com/symbiontDCOS/netinstaller-osi) image.
 
