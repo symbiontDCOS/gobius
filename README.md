@@ -8,7 +8,7 @@ Goby is a dialog based ncurses application that installs Symbiont SlimOS.  It is
 We use the pants build system to make pex binary packages.  In fact, the pants executable is available right here in the repo!  To spin up a quick build do:
 
 ```
-./pants package src/python/gobius:main
+./pants package src/python/gobius:goby
 ```
 
 ## Developing Goby  

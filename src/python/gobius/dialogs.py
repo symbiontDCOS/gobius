@@ -28,10 +28,10 @@ SOFTWARE.
 
 import sys
 import time
-import pytz
 import random
-from gobius.utils import list_disks, list_images, write_image
+import pytz
 from dialog import Dialog
+from gobius.utils import list_disks, list_images, write_image
 
 
 DISPLAY = Dialog(dialog="dialog", DIALOGRC="/etc/dialogrc")
@@ -39,8 +39,9 @@ DISPLAY = Dialog(dialog="dialog", DIALOGRC="/etc/dialogrc")
 
 def display_write_image(url, dest):
     """
-    Write the selected image to disk using bmaptools. This requires a specialized webserver
-    (osi-hub).  The webserver must display the artifacts in json format.
+    Write the selected image to disk using bmaptools. This requires a
+    specialized webserver (osi-hub).  The webserver must display the
+    artifacts in json format.
     """
     pretty_image = url.split("/")[-1]
     DISPLAY.gauge_start(f"Installing {pretty_image}", width=80, height=15, percent=0)
@@ -110,23 +111,24 @@ def display_license():
 
         By downloading or installing Symbiont software, you acknowledge that
         you understand all of the following: Symbiont software and technical
-        information may be subject to the U.S. Export Administration Regulations
-        (the “EAR”) and other U.S. and foreign laws and may not be exported,
-        re-exported or transferred (a) to any country listed in Country Group
-        E:1 in Supplement No. 1 to part 740 of the EAR (currently, Cuba, Iran,
-        North Korea, Sudan & Syria); (b) to any prohibited destination or to
-        any end user who has been prohibited from participating in U.S. export
-        transactions by any federal agency of the U.S.  government; or (c) for
-        use in connection with the design, development or production of nuclear,
-        chemical or biological weapons, or rocket systems, space launch vehicles,
-        or sounding rockets, or unmanned air vehicle systems. You may not download
-        Fedora software or technical information if you are located in one of
-        these countries or otherwise subject to these restrictions. You may not
-        provide Fedora software or technical information to individuals or entities
-        located in one of these countries or otherwise subject to these restrictions.
+        information may be subject to the U.S. Export Administration
+        Regulations (the “EAR”) and other U.S. and foreign laws and may not
+        be exported, re-exported or transferred (a) to any country listed in
+        Country Group E:1 in Supplement No. 1 to part 740 of the EAR
+        (currently, Cuba, Iran, North Korea, Sudan & Syria); (b) to any
+        prohibited destination or to any end user who has been prohibited
+        from participating in U.S. export transactions by any federal agency
+        of the U.S.  government; or (c) for use in connection with the design,
+        development or production of nuclear, chemical or biological weapons,
+        or rocket systems, space launch vehicles, or sounding rockets, or
+        unmanned air vehicle systems. You may not download Fedora software or
+        technical information if you are located in one of these countries or
+        otherwise subject to these restrictions. You may not provide Fedora
+        software or technical information to individuals or entities located
+        in one of these countries or otherwise subject to these restrictions.
         You are also responsible for compliance with foreign law requirements
-        applicable to the import, export and use of Symbiont software and technical
-        information.
+        applicable to the import, export and use of Symbiont software and
+        technical information.
 
         Do you accept the license terms?
 
