@@ -30,11 +30,11 @@ import sys
 import time
 import random
 import pytz
-from dialog import Dialog
+import dialog # type: ignore
 from gobius.utils import list_disks, list_images, write_image
 
 
-DISPLAY = Dialog(dialog="dialog", DIALOGRC="/etc/dialogrc")
+DISPLAY = dialog.Dialog(dialog="dialog", DIALOGRC="/etc/dialogrc")
 
 
 def display_write_image(url, dest):
