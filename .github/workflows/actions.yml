@@ -19,7 +19,7 @@ jobs:
         run: ./pants lint src/python/gobius --black-skip
 
       - name: Check formatting
-        run: ./pants lint src/python/gobius --flake-skip    
+        run: ./pants lint src/python/gobius --flake8-skip    
 
       - name: Check type
         run: ./pants typecheck src/python/gobius 
