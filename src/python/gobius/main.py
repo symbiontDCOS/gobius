@@ -91,7 +91,7 @@ def install():
 
 def post_install(args):
     """Post install steps"""
-    pass
+    display_complete()
 
 
 def main():

@@ -80,7 +80,10 @@ def list_images(url):
 
     except (requests.ConnectionError, json.JSONDecodeError):
         sys.exit(
-            f"Unable to find image directory. Please check the URL ({url}) and try again. Installation aborted!!"
+            (
+                "Unable to find image directory."
+                f"Please check the URL ({url}) and try again. Installation aborted!!"
+            )
         )
 
 
