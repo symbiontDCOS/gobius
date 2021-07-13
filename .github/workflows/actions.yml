@@ -1,26 +1,28 @@
-name: Code Hygene
+name: CI Unit Test
 
 on:
   push:
-    branches: [ main ]
+    branches: 
+      - main
   pull_request:
-    branches: [ main ]
+    branches:
+      - main
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  flake8-lint-checker:
+  unit-test:
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Pants lint check
-        run: ./pants lint src/python/gobius
-  mypy-type-checker:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Pants lint check
-        run: ./pants typecheck src/python/gobius
 
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Check linting
+        run: ./pants lint src/python/gobius --black-skip
+
+      - name: Check formatting
+        run: ./pants lint src/python/gobius --flake-skip    
+
+      - name: Check type
+        run: ./pants typecheck src/python/gobius 
+
+
+          
