@@ -30,7 +30,7 @@ import sys
 import time
 import random
 import pytz
-import dialog    # type: ignore
+import dialog  # type: ignore
 from gobius.utils import list_disks, list_images, write_image
 
 
