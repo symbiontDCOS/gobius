@@ -70,7 +70,7 @@ def list_images(url):
     """Pull the list of images from the server"""
     try:
         images = []
-        resp = requests.get(url)
+        resp = requests.get(url, timeout=30)
 
         for item in resp.json():
             if item["name"].endswith(".img") or item["name"].endswith(".img.xz"):
@@ -78,13 +78,11 @@ def list_images(url):
 
         return images
 
-    except (requests.ConnectionError, json.JSONDecodeError):
-        sys.exit(
-            (
-                "Unable to find image directory."
-                f"Please check the URL ({url}) and try again. Installation aborted!!"
-            )
-        )
+    except requests.Timeout:
+        die("Request timed out. Please try again.  Aborting installation.")
+
+    except json.JSONDecodeError:
+        die("Invalid JSON detected. Can not detect images. Aborting Installation.")
 
 
 def write_image(url, dest):
