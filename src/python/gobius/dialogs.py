@@ -195,13 +195,12 @@ def display_timezone():
 def display_disk():
     """Select disk from list"""
     mydisks = list_disks()
-    mydisks.sort()
     tag = []
     desc = []
 
     for item in mydisks:
-        tag.append(f"/dev/{item}")
-        desc.append(item)
+        tag.append(f"/dev/{item['name']}")
+        desc.append(item["model"])
 
     mydisklist = zip(tag, desc)
 

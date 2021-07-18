@@ -50,14 +50,19 @@ def die(msg):
 
 def list_disks():
     """Gather disk names"""
-    mydisks = run(shlex.split("/usr/bin/lsblk -J"), capture_output=True, check=True)
+    mydisks = run(shlex.split("/usr/bin/lsblk -SJ"), capture_output=True, check=True)
     mydisks = mydisks.stdout
     mydisks = json.loads(mydisks.decode("utf-8"))
 
     myblockdevices = []
 
     for drive in mydisks["blockdevices"]:
-        myblockdevices.append(drive["name"])
+        myblockdevices.append(
+            {
+                "name": drive["name"],
+                "model": drive["model"],
+            }
+        )
 
     # Remove listings for cdrom/dvdrom devices
     if "sr0" in myblockdevices:
