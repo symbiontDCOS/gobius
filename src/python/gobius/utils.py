@@ -92,6 +92,5 @@ def list_images(url):
 
 def write_image(url, dest):
     """Write the image out to its final destination"""
-    return spawn(
-        shlex.split(f"/usr/bin/bmaptool --quiet copy --no-sig-verify {url} {dest}")
-    )
+    run(shlex.split(f"/usr/bin/bmaptool copy --no-sig-verify --nobmap {url} {dest}"))
+    run(shlex.split(f"/usr/bin/sync"))

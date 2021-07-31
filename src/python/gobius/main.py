@@ -25,6 +25,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
+import shlex
 from gobius.dialogs import (
     display_complete,
     display_final_answer,
@@ -33,12 +34,16 @@ from gobius.dialogs import (
     display_password,
     display_urlselector,
     display_title,
-    display_write_image,
     display_disk,
     display_image,
     display_timezone,
 )
-from gobius.utils import die
+
+from gobius.utils import (
+    die,
+    run,
+    write_image,
+)
 
 
 VERSION = "2107rc1"
@@ -80,23 +85,30 @@ def install():
     ):
         die("Installer terminated per user request")
 
-    display_write_image(f"{myurl[1]}/{image}", disk)
+    write_image(f"{myurl[1]}/{image}", disk)
 
     return {
         "timezone": timezone,
         "hostname": hostname,
         "password": password,
+        "disk": disk,
     }
 
 
 def post_install(args):
     """Post install steps"""
+    print("Starting post-install steps...")
+    run(shlex.split(f'/usr/bin/systemd-nspawn -i {args["disk"]} /bin/bash -c "/usr/bin/echo {args["hostname"]} > /etc/hostname"'))
+    run(shlex.split(f'/usr/bin/systemd-nspawn -i {args["disk"]} /bin/bash -c "/usr/bin/echo {args["password"]} | passwd --stdin"'))
+    
+
     display_complete()
 
 
 def main():
     """The main function"""
-    install()
+    opts = install()
+    post_install(opts)
 
 
 if __name__ == "__main__":

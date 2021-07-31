@@ -13,3 +13,12 @@ root_patterns = [
     "/test/python",
 ]
 
+[test]
+output = "all"
+use_coverage = true
+
+[pytest]
+args = "-vvv"
+pytest_plugins.add = [
+    "pytest-mock>=3.6.1",
+]
